@@ -1,0 +1,11 @@
+Index: sstmacro-7.1.0/sstmac/backends/native/manager.cc
+===================================================================
+--- sstmacro-7.1.0.orig/sstmac/backends/native/manager.cc
++++ sstmacro-7.1.0/sstmac/backends/native/manager.cc
+@@ -255,4 +255,4 @@ manager::finish()
+ #endif
+ 
+ }
+-} // end of namespace sstmac
+\ No newline at end of file
++} // end of namespace sstmac

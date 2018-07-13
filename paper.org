@@ -1,0 +1,58 @@
+* Introduction 
+
+In this paper, we investigate the performance of distributed applications using two s
+
+* Build SSTMacro  
+#+BEGIN_SRC sh :tangle bin/ECP_CoMD.sh
+     echo "Clean up the place" 
+     set -exu
+     mkdir -p code/
+     cd code/
+     echo "Checkout or update the git containing the source code"
+    #  if [ -e sst-macro ] ; then
+    #     cd sst-macro ; git reset --hard master ; git clean -dfx ; git pull ; cd ..
+    #  else
+    #     git clone --depth=1 https://github.com/sstsimulator/sst-macro.git
+    #  fi
+     test -e sstmacro-source.tar.gz || curl -o sstmacro-source.tar.gz -Lk https://github.com/sstsimulator/sst-macro/releases/download/v7.1.0_Final/sstmacro-7.1.0.tar.gz
+          
+     echo "Unpack the code"
+     mkdir sst-macro && tar -xvf sstmacro-source.tar.gz -C sst-macro --strip-components 1
+     
+     echo "Apply MeteoFrance changes"
+     cd sst-macro/sstmac/backends/native/
+#     patch -p1 < ../../../../../patchs/patch_manager.diff
+      cd ../../
+      cd main/
+      patch -p1 < ../../../../patchs/patch_parseopts.diff
+    #  patch -p1 < ../../../patchs/patch_sstmacc.diff
+    #  patch -p1 < ../../../patchs/patch_sstmach.diff
+    #  cd sstmac/sumi-mpi/
+    #  patch -p1 < ../../../patchs/patch_mpi_api_vcollectives.diff
+     
+    #  cd ../../../
+    #  echo "Compile it" 
+    #  ./bootstrap.sh 
+    #  mkdir build
+    #  cd build/
+    #  make check 
+
+ #+END_SRC
+
+ #+RESULTS:
+
+* Emacs settings
+# Local Variables:
+# eval:    (org-babel-do-load-languages 'org-babel-load-languages '( (shell . t) (R . t) (perl . t) (ditaa . t) ))
+# eval:    (setq org-confirm-babel-evaluate nil)
+# eval:    (setq org-alphabetical-lists t)
+# eval:    (setq org-src-fontify-natively t)
+# eval:    (add-hook 'org-babel-after-execute-hook 'org-display-inline-images) 
+# eval:    (add-hook 'org-mode-hook 'org-display-inline-images)
+# eval:    (add-hook 'org-mode-hook 'org-babel-result-hide-all)
+# eval:    (setq org-babel-default-header-args:R '((:session . "org-R")))
+# eval:    (setq org-export-babel-evaluate nil)
+# eval:    (setq ispell-local-dictionary "american")
+# eval:    (setq org-export-latex-table-caption-above nil)
+# eval:    (eval (flyspell-mode t))
+# End:
