@@ -1,8 +1,8 @@
-Index: sstmacro-7.1.0/sstmac/main/parseopts.cc
+Index: main/parseopts.cc
 ===================================================================
---- sstmacro-7.1.0.orig/sstmac/main/parseopts.cc
-+++ sstmacro-7.1.0/sstmac/main/parseopts.cc
-@@ -83,6 +83,11 @@ machine_already_configured(){
+--- main.orig/parseopts.cc
++++ main/parseopts.cc
+@@ -85,6 +85,11 @@ machine_already_configured(){
  int
  parse_opts(int argc, char **argv, opts &oo)
  {
@@ -10,24 +10,24 @@ Index: sstmacro-7.1.0/sstmac/main/parseopts.cc
 +  oo.shmid = 0;
 +  oo.go_shmid = "";
 +  oo.go_file = "";
-+  
++
    int no_congestion = 0;
    int pisces_debug = 0;
    int macrels_debug = 0;
-@@ -127,7 +132,7 @@ parse_opts(int argc, char **argv, opts &
+@@ -133,7 +138,7 @@ parse_opts(int argc, char **argv, opts &
    std::list<std::pair<std::string, std::string> > paramlist;
    oo.params = new sprockit::sim_parameters;
    optind = 1;
--  while ((ch = getopt_long(argc, argv, "Phad:f:t:p:m:n:u:i:c:", gopt, NULL))
+-  while ((ch = getopt_long(argc, argv, "Phad:f:t:p:m:n:u:i:c:b:V:g:D:", gopt, NULL))
 +  while ((ch = getopt_long(argc, argv, "Phad:f:t:p:m:n:u:i:c:s:g:", gopt, NULL)) // added s:g: by zhengyj
           != -1) {
      switch (ch) {
        case 0:
-@@ -172,6 +177,15 @@ parse_opts(int argc, char **argv, opts &
+@@ -191,6 +196,15 @@ parse_opts(int argc, char **argv, opts &
          oo.params->parse_line(param_line, false, true);
          break;
        }
-+      // added by zhengyj
++     // added by zhengyj
 +      case 's': {
 +        oo.go_shmid = optarg;
 +        break;

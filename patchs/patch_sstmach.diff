@@ -1,21 +1,15 @@
-Index: sstmacro-7.1.0/sstmac/main/sstmac.h
+Index: main/sstmac.h
 ===================================================================
---- sstmacro-7.1.0.orig/sstmac/main/sstmac.h
-+++ sstmacro-7.1.0/sstmac/main/sstmac.h
-@@ -64,6 +64,9 @@ struct opts {
-   bool print_params;
-   bool low_res_timer;
-   std::string cpu_affinity;
+--- main.orig/sstmac.h
++++ main/sstmac.h
+@@ -70,6 +70,10 @@ struct opts {
+   std::string output_graphviz;
+   std::string params_dump_file;
+ 
 +  int shmid; // added by zhengyj
 +  std::string go_shmid;
 +  std::string go_file;
- 
++  
    opts() :
      help(0),
-@@ -146,4 +149,4 @@ init_first_run(parallel_runtime* rt,
- 
- }
- 
--#endif
-\ No newline at end of file
-+#endif
+     debug(""),
