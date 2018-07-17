@@ -1,6 +1,6 @@
 * Introduction 
+In this paper, we investigate the performance of distributed applications using SimGrid and SSTMacro as a simulators.
 
-In this paper, we investigate the performance of distributed applications using two 
 * Prepearing SSTMacro enviroment
 #+BEGIN_SRC sh :tangle bin/ECP_CoMD.sh
      echo "Clean up the place" 
@@ -36,8 +36,6 @@ In this paper, we investigate the performance of distributed applications using 
 
 * Perform benchmarks on SimGrid 
 ** GCR
-*** Brief description  
-See https://www.geosci-model-dev-discuss.net/gmd-2017-301/gmd-2017-301.pdf
 *** Build and run  
 #+BEGIN_SRC sh :tangle bin/MeteoFrance_GCR.sh
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
@@ -54,8 +52,6 @@ See https://www.geosci-model-dev-discuss.net/gmd-2017-301/gmd-2017-301.pdf
 #+END_SRC
 
 ** Halo
-*** Brief description  
-See https://www.geosci-model-dev-discuss.net/gmd-2017-301/gmd-2017-301.pdf
 *** Build and run  
 #+BEGIN_SRC sh :tangle bin/MeteoFrance_Halo.sh
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
@@ -88,7 +84,6 @@ See https://www.geosci-model-dev-discuss.net/gmd-2017-301/gmd-2017-301.pdf
      patch -p1 < ../../../../patchs/MeteoFrance/transpose/patch_transposemk.diff
      patch -p1 < ../../../../patchs/MeteoFrance/transpose/patch_transposecc.diff
      patch -p1 < ../../../../patchs/MeteoFrance/patch_shm_mgrmk.diff
-
      
      echo "Compile it"
      make -f transpose.mk
