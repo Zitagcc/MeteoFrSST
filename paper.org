@@ -1,6 +1,6 @@
 * Introduction 
 
-In this paper, we investigate the performance of distributed applications using two s
+In this paper, we investigate the performance of distributed applications using two 
 
 * Build SSTMacro  
 #+BEGIN_SRC sh :tangle bin/ECP_CoMD.sh
@@ -14,10 +14,6 @@ In this paper, we investigate the performance of distributed applications using 
       else
          git clone --depth=1 https://github.com/sstsimulator/sst-macro.git
       fi
-#     test -e sstmacro-source.tar.gz || curl -o sstmacro-source.tar.gz -Lk https://github.com/sstsimulator/sst-macro/releases/download/v7.1.0_Final/sstmacro-7.1.0.tar.gz
-          
-#     echo "Unpack the code"
-#     mkdir sst-macro && tar -xvf sstmacro-source.tar.gz -C sst-macro --strip-components 1
      
      echo "Apply MeteoFrance changes"
      cd sst-macro/sstmac/main/
@@ -26,79 +22,18 @@ In this paper, we investigate the performance of distributed applications using 
      patch -p1 < ../../../../patchs/patch_sstmach.diff
      cd ../../sumi-mpi/
      patch -p1 < ../../../patchs/patch_mpi_api_vcollectives.diff
-     
+
      cd ../
      echo "Compile it"
      ./autogen.sh 
-#     ./bootstrap.sh 
-    #  mkdir build
-    #  cd build/
-    #  make check 
+     ./bootstrap.sh                                       
+       mkdir build
+       cd build/
+       ../configure CC=mpicc CXX=mpicxx
+       make check
+       make install
 
  #+END_SRC
-
- #+RESULTS:
- | Clean       | up          | the                     | place                      |                       |                                            |        |         |      |      |                    |
- | Checkout    | or          | update                  | the                        | git                   | containing                                 | the    | source  | code |      |                    |
- | HEAD        | is          | now                     | at                         | 989546                | Merge                                      | pull   | request | #352 | from | sstsimulator/devel |
- | Already     | up          | to                      | date.                      |                       |                                            |        |         |      |      |                    |
- | Apply       | MeteoFrance | changes                 |                            |                       |                                            |        |         |      |      |                    |
- | patching    | file        | parseopts.cc            |                            |                       |                                            |        |         |      |      |                    |
- | patching    | file        | sstmac.cc               |                            |                       |                                            |        |         |      |      |                    |
- | patching    | file        | sstmac.h                |                            |                       |                                            |        |         |      |      |                    |
- | patching    | file        | mpi_api_vcollectives.cc |                            |                       |                                            |        |         |      |      |                    |
- | Compile     | it          |                         |                            |                       |                                            |        |         |      |      |                    |
- | Submodule   | path        | 'sst-dumpi':            | checked                    | out                   | '5744b8d8f8372171c81f55be43ed658bde6a58fa' |        |         |      |      |                    |
- | libtoolize: | putting     | auxiliary               | files                      | in                    | AC_CONFIG_AUX_DIR,                         | 'bin'. |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'bin/ltmain.sh'            |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | macros                  | in                         | AC_CONFIG_MACRO_DIRS, | 'acinclude'.                               |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/libtool.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/ltoptions.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/ltsugar.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/ltversion.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/lt~obsolete.m4' |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | auxiliary               | files                      | in                    | AC_CONFIG_AUX_DIR,                         | 'bin'. |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'bin/ltmain.sh'            |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | macros                  | in                         | AC_CONFIG_MACRO_DIRS, | 'acinclude'.                               |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/libtool.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/ltoptions.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/ltsugar.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/ltversion.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/lt~obsolete.m4' |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | auxiliary               | files                      | in                    | AC_CONFIG_AUX_DIR,                         | 'bin'. |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'bin/ltmain.sh'            |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | macros                  | in                         | AC_CONFIG_MACRO_DIRS, | 'acinclude'.                               |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/libtool.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/ltoptions.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/ltsugar.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/ltversion.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | 'acinclude/lt~obsolete.m4' |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | auxiliary               | files                      | in                    | '..'.                                      |        |         |      |      |                    |
- | libtoolize: | linking     | file                    | '../ltmain.sh'             |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | auxiliary               | files                      | in                    | AC_CONFIG_AUX_DIR,                         | 'bin'. |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'bin/ltmain.sh'            |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | macros                  | in                         | AC_CONFIG_MACRO_DIRS, | 'acinclude'.                               |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/libtool.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/ltoptions.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/ltsugar.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/ltversion.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/lt~obsolete.m4' |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | auxiliary               | files                      | in                    | AC_CONFIG_AUX_DIR,                         | 'bin'. |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'bin/ltmain.sh'            |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | macros                  | in                         | AC_CONFIG_MACRO_DIRS, | 'acinclude'.                               |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/libtool.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/ltoptions.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/ltsugar.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/ltversion.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/lt~obsolete.m4' |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | auxiliary               | files                      | in                    | AC_CONFIG_AUX_DIR,                         | 'bin'. |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'bin/ltmain.sh'            |                       |                                            |        |         |      |      |                    |
- | libtoolize: | putting     | macros                  | in                         | AC_CONFIG_MACRO_DIRS, | 'acinclude'.                               |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/libtool.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/ltoptions.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/ltsugar.m4'     |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/ltversion.m4'   |                       |                                            |        |         |      |      |                    |
- | libtoolize: | copying     | file                    | 'acinclude/lt~obsolete.m4' |                       |                                            |        |         |      |      |                    |
 
 * Emacs settings
 # Local Variables:
