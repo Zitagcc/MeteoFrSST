@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<config id="Config">
+<!-- start of x coordinate -->
+ <xs value="0"/>
+<!-- end of x coordinate -->
+ <xe value="360"/>
+<!-- start of y coordinate -->
+ <ys value="-90"/>
+<!-- end of y coordinate -->
+ <ye value="+90"/>
+<!-- start of z coordinate -->
+ <zs value="0"/>
+<!-- end of z coordinate -->
+ <ze value="1"/>
+
+<!-- number of grid points in x direction -->
+ <nx value="28800"/>
+<!-- number of grid points in y direction -->
+ <ny value="14400"/>
+<!-- number of grid points in z direction -->
+ <nz value="256"/>
+
+<!-- boundary condition in x direction: 0=specified boundary, 1=periodic boundary -->
+ <ibnd_x value="1"/>
+<!-- boundary condition in y direction: 0=specified boundary, 1=periodic boundary -->
+ <ibnd_y value="1"/>
+<!-- boundary condition in z direction: 0=specified boundary, 1=periodic boundary -->
+ <ibnd_z value="0"/>
+
+<!-- number of tiles in x direction for domain partition -->
+ <ntile_x value="0"/>
+<!-- number of tiles in y direction for domain partition -->
+ <ntile_y value="0"/>
+<!-- number of tiles in z direction for domain partition -->
+ <ntile_z value="0"/>
+ 
+<!-- width of halo region (ghost points) in x direction -->
+ <whalo_x value="0"/>
+<!-- width of halo region (ghost points) in y direction -->
+ <whalo_y value="0"/>
+<!-- width of halo region (ghost points) in z direction -->
+ <whalo_z value="0"/>
+
+<!-- number of iterations for robust statistics -->
+ <niter value="1"/>
+<!-- radix for bruck algorithm or how many round before wait for ring algorithm -->
+ <radix value="4"/>
+
+<!-- number of spectral truncation -->
+ <ntrunc value="639"/>
+</config>
