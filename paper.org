@@ -1,5 +1,5 @@
 * Introduction 
-In this paper, we investigate the performance of distributed applications using SimGrid and SSTMacro as a simulators.
+- In this paper, we investigate the performance of distributed applications using SimGrid and SSTMacro.
 
 * Prepearing SSTMacro enviroment
 #+BEGIN_SRC sh :tangle bin/ECP_CoMD.sh
@@ -43,15 +43,20 @@ In this paper, we investigate the performance of distributed applications using 
   export PATH=$SIMGRID_PATH/build/bin:$SIMGRID_PATH/bin:$PATH
  
      echo "Install the modified sources"
-     cd Benchmarks/MeteoFrance/code/gcr/
+     cd Benchmarks/gcr/
 
      smpicxx allreduce.cc -o allreduce
-     
+
      echo "Run it"
-     smpirun -np 8 -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml ./allreduce 2 3 
+     smpirun -np 8 -hostfile ../common/cluster_hostfile.txt -platform ../common/cluster_crossbar.xml ./allreduce 2 3 
 #+END_SRC
 
 ** Halo
+The most common application of the wide halo exachange is the SL method. For the resolution of 0.0125 and a time step of 30 seconds, 
+the departure is appoximately 5 grid points away from its arrival if the maximum wind speed is 200 m/s: therfore, the width ofthe halo is at 
+least 7 grid points using the ECMWF quasi-cubic scheme (Rithie, 1995); there are more grid points if a higher order scheme such as the SLICE-3D 
+(Zerroukat and Allen, 2012) 
+
 *** Build and run  
 #+BEGIN_SRC sh :tangle bin/MeteoFrance_Halo.sh
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
@@ -69,7 +74,7 @@ In this paper, we investigate the performance of distributed applications using 
      make -f shm_mgr.mk
 
      echo "Run it"
-     smpirun -np 8 -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
+     smpirun -np 8 -hostfile ../common/cluster_hostfile.txt -platform ../common/cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
 #+END_SRC
 
 ** Transpose 
@@ -90,8 +95,14 @@ In this paper, we investigate the performance of distributed applications using 
      make -f shm_mgr.mk
 
      echo "Run it"
-     smpirun -np 8 -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./transpose.exe
+     smpirun -np 8 -hostfile ../common/cluster_hostfile.txt -platform ../common/cluster_crossbar.xml --cfg=smpi/host-speed:100 ./transpose.exe
 #+END_SRC
+
+* Tests : 
+- Distribution of delayed envents of transposition for the spectral transform method with 10⁴ MPI processes using : 
+(a) Different routing algorithms and topology configurations.
+(b) Different bandwidths.
+(c) Different latencies.
 
 * Emacs settings
 # Local Variables:
