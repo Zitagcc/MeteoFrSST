@@ -1,7 +1,12 @@
 * Introduction 
 - In this paper, we investigate the performance of distributed applications using SimGrid and SSTMacro.
-
+- Examine and compare the impact of different factors such as latency, bandwidth, routing and network topology on response time.
+- As MPI operations in the setup step not only are time-consuming, but also affect subesquent communications. 
+- To eliminate this effect one can perform many iterations to obtain a robust estimation of communication time, however, one iteration is already very time-consuming for simualtion.
+- To avoid this issue, an esternal auxiliary program is used to create a shared memory segment on each node running SST-macro.
+- and initialize this memory with the setup information of all the simulated MPI processes.
 * Prepearing SSTMacro enviroment
+
 #+BEGIN_SRC sh :tangle bin/ECP_CoMD.sh
      echo "Clean up the place" 
      set -exu
