@@ -7,7 +7,29 @@
 - and initialize this memory with the setup information of all the simulated MPI processes.
 * Prepearing SSTMacro enviroment
 
-#+BEGIN_SRC sh :tangle bin/ECP_CoMD.sh
+#+BEGIN_SRC sh
+     echo "Clean up the place" 
+     set -exu
+
+     echo "Clean up the place" 
+     set -xeu
+     rm -rf code/sstcore
+     mkdir -p code/sstcore
+     cd code/
+     echo "Download the source code"
+     test -e sstcore-source.tgz || curl -o sstcore-source.tgz -Lk https://github.com/sstsimulator/sst-core/releases/download/v8.0.0_Final/sstcore-8.0.0.tar.gz
+
+     echo "Unpack the code"
+     tar -xvf sstcore-source.tgz -C sstcore --strip-components 1
+     cd sstcore/
+
+     ./configure
+
+     make -j 4 
+
+ #+END_SRC
+
+#+BEGIN_SRC sh
      echo "Clean up the place" 
      set -exu
      mkdir -p code/
