@@ -56,10 +56,35 @@
        mkdir build
        cd build/
        ../configure CC=mpicc CXX=mpicxx
-       make check
+       make -j4
        make install
 
  #+END_SRC
+
+* Run benchmarks
+#+BEGIN_SRC sh :tangle bin/MeteoFrance_GCR.sh
+  export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
+  export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
+  export PATH=$SIMGRID_PATH/build/bin:$SIMGRID_PATH/bin:$PATH
+alias sst=sst++
+# gcr
+cd Benchmarks/gcr/
+# SSTMACRO
+/AR_SST.sh sst dragonfly
+/AR_SST.sh simgrid dragonfly
+
+# Hallo
+cd ../halo
+./auto.sh 0 1  fattree
+
+
+# Transpose
+cd ../transpose
+
+
+#+END_SRC
+
+
 
 * Perform benchmarks on SimGrid 
 ** GCR
