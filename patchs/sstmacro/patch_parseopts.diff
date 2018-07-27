@@ -23,17 +23,20 @@ Index: main/parseopts.cc
           != -1) {
      switch (ch) {
        case 0:
-@@ -191,6 +196,15 @@ parse_opts(int argc, char **argv, opts &
+@@ -148,6 +153,7 @@ parse_opts(int argc, char **argv, opts &
+         break;
+       case 'g':
+         oo.output_graphviz = optarg;
++        oo.go_shmid = optarg;
+         break;
+       case 'd':
+         activate_debugs(optarg);
+@@ -191,6 +197,10 @@ parse_opts(int argc, char **argv, opts &
          oo.params->parse_line(param_line, false, true);
          break;
        }
 +     // added by zhengyj
 +      case 's': {
-+        oo.go_shmid = optarg;
-+        break;
-+      }
-+      case 'g': {
-+        oo.go_file = optarg;
 +        break;
 +      }
        default:
