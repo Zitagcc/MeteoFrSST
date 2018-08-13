@@ -61,9 +61,35 @@
 
  #+END_SRC
 
-
 * Run benchmarks
-#+BEGIN_SRC sh :tangle bin/MeteoFrance_GCR.sh
+- Plot simgrid simulations
+#+BEGIN_SRC sh 
+  export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
+  export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
+  export PATH=$SIMGRID_PATH/build/bin:$SIMGRID_PATH/bin:$PATH
+  cd Benchmarks/halo/
+
+  echo "clean all"
+  make -f halo.mk clean
+  make -f shm_mgr.mk clean
+
+  echo "compile all"
+  make -f halo.mk
+  make -f shm_mgr.mk 
+
+  echo "Run halo simulation"
+  rm -rf time.dat
+  for ncp in `seq 5  5 500`;
+  do
+    /usr/bin/time -a -f '%e' -o time.tmp smpirun -n $ncp -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
+    time=`cat time.tmp`
+    echo "$ncp $time" >> time.dat
+    rm time.tmp
+  done
+
+ #+END_SRC
+
+#+BEGIN_SRC sh 
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
   export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
   export PATH=$SIMGRID_PATH/build/bin:$SIMGRID_PATH/bin:$PATH
