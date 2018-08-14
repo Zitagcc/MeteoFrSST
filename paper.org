@@ -88,6 +88,17 @@
   done
 
  #+END_SRC
+ 
+ #+BEGIN_SRC gnuplot
+
+  cd Benchmarks/halo/ 
+  echo "plot it"
+  gnuplot
+  set ylabel "Time (s)"
+  set xlabel "Number of processes"
+  exit
+  plot "./time.dat" title "Halo" w lp
+ #+END_SRC
 
 #+BEGIN_SRC sh 
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
