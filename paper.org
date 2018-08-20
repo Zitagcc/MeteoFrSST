@@ -6,6 +6,7 @@
 - To avoid this issue, an esternal auxiliary program is used to create a shared memory segment on each node running SST-macro.
 - and initialize this memory with the setup information of all the simulated MPI processes.
 * Prepearing SSTMacro enviroment
+- SST-CORE is one of a bunch of external components that are required to be installed before building SST.
 ** SST-CORE
 SST-core is required to be installed before building SST.
 #+BEGIN_SRC sh
@@ -29,6 +30,7 @@ SST-core is required to be installed before building SST.
   make -j 4 
 
  #+END_SRC
+- In order to run the same test as the ones of MeteoFrance paper, one has to apply some changes on SST-Macro source code. 
 ** SST-Macro
 #+BEGIN_SRC sh
   echo "Clean up the place" 
@@ -63,6 +65,7 @@ SST-core is required to be installed before building SST.
  #+END_SRC
 
 * Run benchmarks 
+- Perform MeteoFrance's benchmarks with smpi.
 ** Halo with simgrid
 *** Run simulations
 #+BEGIN_SRC sh 
@@ -91,8 +94,31 @@ SST-core is required to be installed before building SST.
 
  #+END_SRC
 ** Halo with sst-macro
+- Perform MeteoFrance's benchmarks with sstmacro.
+#+BEGIN_SRC sh 
+  export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
+  export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
+  export PATH=$SIMGRID_PATH/build/bin:$SIMGRID_PATH/bin:$PATH
+  alias sst=sst++
+  # gcr
+  cd Benchmarks/gcr/
+  # SSTMACRO
+  #/AR_SST.sh sst dragonfly
+  #/AR_SST.sh simgrid dragonfly
+
+  # Hallo
+  cd ../halo
+  ./auto.sh 0 1  fattree
+
+
+  # Transpose
+  cd ../transpose
+  ./auto.sh 0 1  fattree
+
+#+END_SRC
 
 ** Plot results
+- Gather and plot in the same graphe smpi and sst results.
  #+BEGIN_SRC gnuplot
 
   cd Benchmarks/halo/ 
@@ -133,27 +159,6 @@ SST-core is required to be installed before building SST.
  #+END_SRC
 
 
-#+BEGIN_SRC sh 
-  export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
-  export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
-  export PATH=$SIMGRID_PATH/build/bin:$SIMGRID_PATH/bin:$PATH
-  alias sst=sst++
-  # gcr
-  cd modified/gcr/
-  # SSTMACRO
-  #/AR_SST.sh sst dragonfly
-  #/AR_SST.sh simgrid dragonfly
-
-  # Hallo
-  cd ../halo
-  ./auto.sh 0 1  fattree
-
-
-  # Transpose
-  cd ../transpose
-  ./auto.sh 0 1  fattree
-
-#+END_SRC
 
 * Perform benchmarks on SimGrid 
 ** GCR
