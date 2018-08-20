@@ -7,6 +7,7 @@
 - and initialize this memory with the setup information of all the simulated MPI processes.
 * Prepearing SSTMacro enviroment
 ** SST-CORE
+SST-core is required to be installed before building SST.
 #+BEGIN_SRC sh
   echo "Clean up the place" 
   set -exu
@@ -61,9 +62,9 @@
 
  #+END_SRC
 
-* Run benchmarks
-- Plot simgrid simulations
-** Halo 
+* Run benchmarks 
+** Halo with simgrid
+*** Run simulations
 #+BEGIN_SRC sh 
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
   export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
@@ -84,12 +85,14 @@
   do
     /usr/bin/time -a -f '%e' -o time.tmp smpirun -n $ncp -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
     time=`cat time.tmp`
-    echo "$ncp $time" >> time.dat
+    echo "$ncp $time" >> plotsimgrid.dat
     rm time.tmp
   done
 
  #+END_SRC
- 
+** Halo with sst-macro
+
+** Plot results
  #+BEGIN_SRC gnuplot
 
   cd Benchmarks/halo/ 
@@ -98,10 +101,11 @@
   set ylabel "Time (s)"
   set xlabel "Number of processes"
   exit
-  plot "./time.dat" title "Halo" w lp
+  plot "./plotsimgrid.dat" title "Halo" w lp, "./plotsstmacro.dat" title "sst-macro" w lp
  #+END_SRC
 
 ** Transpose 
+*** Run simulations
 #+BEGIN_SRC sh 
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
   export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
