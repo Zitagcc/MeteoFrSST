@@ -161,8 +161,7 @@ SST-core is required to be installed before building SST.
 
 
 * Perform benchmarks on SimGrid 
-** GCR
-*** Build and run  
+** GCR  
 #+BEGIN_SRC sh :tangle bin/MeteoFrance_GCR.sh
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
   export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
@@ -178,12 +177,6 @@ SST-core is required to be installed before building SST.
 #+END_SRC
 
 ** Halo
-The most common application of the wide halo exachange is the SL method. For the resolution of 0.0125 and a time step of 30 seconds, 
-the departure is appoximately 5 grid points away from its arrival if the maximum wind speed is 200 m/s: therfore, the width ofthe halo is at 
-least 7 grid points using the ECMWF quasi-cubic scheme (Rithie, 1995); there are more grid points if a higher order scheme such as the SLICE-3D 
-(Zerroukat and Allen, 2012) 
-
-*** Build and run  
 #+BEGIN_SRC sh :tangle bin/MeteoFrance_Halo.sh
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
   export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
@@ -200,11 +193,21 @@ least 7 grid points using the ECMWF quasi-cubic scheme (Rithie, 1995); there are
   make -f shm_mgr.mk
 
   echo "Run it"
-  smpirun -np 8 -hostfile ../common/cluster_hostfile.txt -platform ../common/cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
+  rm -rf halosmpi.dat
+  for ncp in `seq 100 5 7000`;
+  do
+     /usr/bin/time -a -f '%e' -o time.tmp smpirun -n $ncp -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
+     time=`cat time.tmp`
+     echo "$ncp $time" >> halosmpi.dat
+     rm time.tmp
+  done
+
 #+END_SRC
 
+
+[[./img/halo_scaling.pdf]]
+
 ** Transpose 
-*** Build and run  
 #+BEGIN_SRC sh :tangle bin/MeteoFrance_transpose.sh
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
   export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
