@@ -83,8 +83,8 @@ SST-core is required to be installed before building SST.
   make -f shm_mgr.mk 
 
   echo "Run halo simulation"
-  rm -rf time.dat
-  for ncp in `seq 5  5 500`;
+  rm -rf plotsimgrid.dat
+  for ncp in `seq 100  50 100000`;
   do
     /usr/bin/time -a -f '%e' -o time.tmp smpirun -n $ncp -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
     time=`cat time.tmp`
@@ -92,7 +92,24 @@ SST-core is required to be installed before building SST.
     rm time.tmp
   done
 
+  rm -rf 0*
+
  #+END_SRC
+
+*** Plot 
+#+begin_src gnuplot :exports code :file file.png
+  cd Benchmarks/halo/
+
+  reset
+
+  set title "Strong scalability of halo app with simgrid"
+
+  set xlabel "Number of processes"
+  set ylabel "Time (s) "
+
+  plot "./halosimgrid.dat" title "halo" w lp lw 1
+#+end_src
+
 ** Halo with sst-macro
 - Perform MeteoFrance's benchmarks with sstmacro.
 #+BEGIN_SRC sh 
