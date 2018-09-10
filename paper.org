@@ -66,7 +66,7 @@ SST-core is required to be installed before building SST.
 
 * Run benchmarks 
 - Perform MeteoFrance's benchmarks with smpi.
-** Halo with simgrid
+** Halo with simgrid (SMPI-proxy-apps)
 *** Run simulations
 #+BEGIN_SRC sh 
   export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
@@ -94,6 +94,35 @@ SST-core is required to be installed before building SST.
   do
     smpirun -n $ncp -trace -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
   done
+
+ #+END_SRC
+
+** Halo with simgrid (autogen - meteofr way)
+*** Run simulations
+#+BEGIN_SRC sh 
+  export SIMGRID_PATH="${SIMGRID_PATH:=~/simgrid}"
+  export LD_LIBRARY_PATH=$SIMGRID_PATH/build/lib:$SIMGRID_PATH/lib:$LD_LIBRARY_PATH
+  export PATH=$SIMGRID_PATH/build/bin:$SIMGRID_PATH/bin:$PATH
+  cd Benchmarks/halo/
+
+  echo "Install the modified sources"
+  cd Benchmarks/MeteoFrance/code/halo/
+  patch -p1 < ../../patchs/MeteoFrance/halo/patch_halomk.diff
+  patch -p1 < ../../patchs/MeteoFrance/halo/patch_halocc.diff
+  patch -p1 < ../../patchs/src/MeteoFrance/patch_shm_mgrmk.diff
+
+  echo "clean all"
+  make -f halo.mk clean
+  make -f shm_mgr.mk clean
+ 
+  echo "Compile it"
+  make -f halo.mk
+  make -f shm_mgr.mk
+
+  ./auto.sh 1 2
+
+  cd 00007000/
+  ./halo.exe.cmd
 
  #+END_SRC
 

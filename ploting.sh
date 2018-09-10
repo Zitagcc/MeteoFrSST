@@ -13,8 +13,11 @@
 
 cd Benchmarks/halo 
 ./auto.sh 1 2 3
-smpirun -np 1 -platform ../cluster_crossbar.xml -hostfile ../cluster_hostfile.txt --cfg=smpi/host-speed:100 ./shm_mgr.x 00000100 100 -1
+./auto.sh 1 2
+
+
+smpirun -np 4 -platform ../cluster_crossbar.xml -hostfile ../cluster_hostfile.txt --cfg=smpi/host-speed:100 ./shm_mgr.x 00000100 100 -1
 GO_MBLOCK_SHMID=`cat 00000100/GO_MBLOCK_SHMID`
-smpirun -np 1  -platform ../cluster_crossbar.xml  -hostfile ../cluster_hostfile.txt --cfg=smpi/host-speed:100 ./halo.exe -s $GO_MBLOCK_SHMID  -f 00000100/parameters.ini
-smpirun -np 1  -platform ../cluster_crossbar.xml  -hostfile ../cluster_hostfile.txt --cfg=smpi/host-speed:100 ./shm_mgr.x $GO_MBLOCK_SHMID
+smpirun -np 4  -platform ../cluster_crossbar.xml  -hostfile ../cluster_hostfile.txt --cfg=smpi/host-speed:100 ./halo.exe -s $GO_MBLOCK_SHMID  -f 00000100/parameters.ini
+smpirun -np 4  -platform ../cluster_crossbar.xml  -hostfile ../cluster_hostfile.txt --cfg=smpi/host-speed:100 ./shm_mgr.x $GO_MBLOCK_SHMID
 

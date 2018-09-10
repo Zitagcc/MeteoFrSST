@@ -23,7 +23,7 @@ if [ $# -eq 3 ]; then
   if [ "$1" == "sst" ]; then
     sed -i $BK "s/CXX := .*/CXX := sst++/g" halo.mk
     sed -i $BK "s/CC := .*/CC := sstcc/g" halo.mk
-  else if [ "$1" == "smpi" ]; then
+  elif [ "$1" == "smpi" ]; then
     sed -i $BK "s/CXX := .*/CXX := smpicxx/g" halo.mk
     sed -i $BK "s/CC := .*/CC := smpicc/g" halo.mk
   else
