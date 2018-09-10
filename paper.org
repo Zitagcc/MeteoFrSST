@@ -83,16 +83,11 @@ SST-core is required to be installed before building SST.
   make -f shm_mgr.mk 
 
   echo "Run halo simulation"
-  rm -rf plotsimgrid.dat
-  for ncp in `seq 100  50 100000`;
+  # rm -rf plotsimgrid.dat
+  for ncp in `seq 100  100 1000`;
   do
-    /usr/bin/time -a -f '%e' -o time.tmp smpirun -n $ncp -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
-    time=`cat time.tmp`
-    echo "$ncp $time" >> plotsimgrid.dat
-    rm time.tmp
+    smpirun -n $ncp -trace -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exeq
   done
-
-  rm -rf 0*
 
  #+END_SRC
 

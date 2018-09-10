@@ -23,6 +23,9 @@ if [ $# -eq 3 ]; then
   if [ "$1" == "sst" ]; then
     sed -i $BK "s/CXX := .*/CXX := sst++/g" halo.mk
     sed -i $BK "s/CC := .*/CC := sstcc/g" halo.mk
+  else if [ "$1" == "smpi" ]; then
+    sed -i $BK "s/CXX := .*/CXX := smpicxx/g" halo.mk
+    sed -i $BK "s/CC := .*/CC := smpicc/g" halo.mk
   else
     sed -i $BK "s/CXX := .*/CXX := mpicxx/g" halo.mk
     sed -i $BK "s/CC := .*/CC := mpicc/g" halo.mk
@@ -50,5 +53,6 @@ if [ "$1" == "sst" ]; then
     nohup ./JOB_BAT_SST.py 28800:14400:1000000 100 30 16:0 first_available:block dragonfly:minimal 1:1 10:10:10:10:10 1000:1000:1000:1000:1000 25:25:75:25:74 &
   fi
 else
-  nohup ./JOB_BAT_SST.py 28800:14400:10000 100 30 200 &
+  nohup ./JOB_BAT_SST.py 28800:14400:200000 100 30 16:0 first_available:block torus:minimal 1:1 10:10:10:10:10 1000:1000:1000:1000:1000 25:25:25:25 &
+  # nohup ./JOB_BAT_SST.py 28800:14400:10000 100 30 200 &
 fi
