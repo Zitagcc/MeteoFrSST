@@ -74,19 +74,25 @@ SST-core is required to be installed before building SST.
   export PATH=$SIMGRID_PATH/build/bin:$SIMGRID_PATH/bin:$PATH
   cd Benchmarks/halo/
 
+  echo "Install the modified sources"
+  cd Benchmarks/MeteoFrance/code/halo/
+  patch -p1 < ../../patchs/MeteoFrance/halo/patch_halomk.diff
+  patch -p1 < ../../patchs/MeteoFrance/halo/patch_halocc.diff
+  patch -p1 < ../../patchs/src/MeteoFrance/patch_shm_mgrmk.diff
+
   echo "clean all"
   make -f halo.mk clean
   make -f shm_mgr.mk clean
-
-  echo "compile all"
+ 
+  echo "Compile it"
   make -f halo.mk
-  make -f shm_mgr.mk 
+  make -f shm_mgr.mk
 
   echo "Run halo simulation"
-  # rm -rf plotsimgrid.dat
+  rm -rf plotsimgrid.dat
   for ncp in `seq 100  100 1000`;
   do
-    smpirun -n $ncp -trace -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exeq
+    smpirun -n $ncp -trace -hostfile ../cluster_hostfile.txt -platform ../cluster_crossbar.xml --cfg=smpi/host-speed:100 ./halo.exe
   done
 
  #+END_SRC
